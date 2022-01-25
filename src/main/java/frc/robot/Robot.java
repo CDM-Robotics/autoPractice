@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
     l_Slave.follow(l_Master);
 
     l_Master.setInverted(true);
+    l_Slave.setInverted(true);
 
   }
 
@@ -59,15 +60,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
+    SmartDashboard.putNumber("ticks", r_Master.getSelectedSensorPosition());
   r_Master.getSelectedSensorPosition();
   l_Master.getSelectedSensorPosition(); 
   //one rotation of the motor is 2048 ticks
   //one wheel rotation is 5 motor rotations 
   //circumference of the wheel is 18.84956
 
-
-
-
+  //write your stuff here
   
   r_Master.set(ControlMode.PercentOutput, PercentOutput);  
   l_Master.set(ControlMode.PercentOutput, PercentOutput);

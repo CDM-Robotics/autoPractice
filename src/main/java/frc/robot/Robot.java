@@ -27,6 +27,10 @@ public class Robot extends TimedRobot {
   WPI_TalonFX l_Master = new WPI_TalonFX(14); 
   WPI_TalonFX l_Slave = new WPI_TalonFX(13); 
 
+
+  WPI_TalonFX LeftMaster = new WPI_TalonFX(15); 
+  WPI_TalonFX RightMaster = new WPI_TalonFX(12); 
+
   double PercentOutput = 0; 
   @Override
   public void robotInit() {
@@ -51,6 +55,8 @@ public class Robot extends TimedRobot {
     r_Slave.follow(r_Master);
     l_Slave.follow(l_Master);
 
+    PercentOutput = 0; 
+
   }
 
   /** This function is called periodically during autonomous. 
@@ -67,19 +73,56 @@ public class Robot extends TimedRobot {
   //one wheel rotation is 5 motor rotations 
   //circumference of the wheel is 18.84956
 
-  //write your stuff here
+
+  if (r_Master.getSelectedSensorPosition() > (60 / 18.8496) * 5 * 2048)
+
+    PercentOutput -= 0.005; 
+  else if (r_Master.getSelectedSensorPosition() < (60 / 18.8496) * 2 * 2048) {
+
+    PercentOutput += 0.005; 
+  }
+
+  if (PercentOutput > .10) {
+
+    PercentOutput = .10; 
+  }
+
+  if (PercentOutput < -0.10) {
+
+    PercentOutput = -0.10; 
+  }
   
+
+  
+
+  
+
+
+SmartDashboard.putNumber("speed", PercentOutput);  
   r_Master.set(ControlMode.PercentOutput, PercentOutput);  
   l_Master.set(ControlMode.PercentOutput, PercentOutput);
   }
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+  
+  LeftMaster.follow(RightMaster);
+  LeftMaster.setInverted(true);
+
+
+  }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    // run this for 10 seconds then stop 
+    // the loop runs 50 times each second
+
+    RightMaster.set(ControlMode.PercentOutput, .63);
+
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override

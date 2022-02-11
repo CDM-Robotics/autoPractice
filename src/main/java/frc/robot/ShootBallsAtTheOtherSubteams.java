@@ -28,11 +28,13 @@ public class ShootBallsAtTheOtherSubteams {
      * The input from the joystick button will read true when the button is pressed and for as long as it is held down
      */
     public static void shootMethod(boolean button_isPressed) {
-        
-
-
-
-
+        if(button_isPressed){
+            mSerializer_Master.set(ControlMode.PercentOutput, 0.5);
+            mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 0.5);
+        }else{
+            mSerializer_Master.set(ControlMode.PercentOutput, 0);
+            mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 0);
+        }
     }
 
     /**
@@ -43,11 +45,15 @@ public class ShootBallsAtTheOtherSubteams {
      */
     static int ButtonButton = 0;
     public static void spinUpMethod(boolean button_wasPressed) {
-        
-
-
-
-
+        if(ButtonButton > 0){
+            if(button_wasPressed){
+                shooterRightMaster.set(ControlMode.PercentOutput, 0.5);
+            }else{
+                shooterRightMaster.set(ControlMode.PercentOutput, 0);
+            }
+        }else{
+            ButtonButton++;
+        }
     }
 
     /**
@@ -56,11 +62,8 @@ public class ShootBallsAtTheOtherSubteams {
      * @param yaw
      */
     public static void aimShooter(double yaw) {
-        
-
-
-
-        
+        shooterRotate.set(ControlMode.PercentOutput, yaw);
+    
     }
 
     public static void setup() {

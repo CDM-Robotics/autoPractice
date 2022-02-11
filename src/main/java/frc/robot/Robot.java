@@ -74,23 +74,12 @@ public class Robot extends TimedRobot {
   //circumference of the wheel is 18.84956
 
 
-  if (r_Master.getSelectedSensorPosition() > (60 / 18.8496) * 5 * 2048)
+if (r_Master.getSelectedSensorPosition() < 32594) {
 
-    PercentOutput -= 0.005; 
-  else if (r_Master.getSelectedSensorPosition() < (60 / 18.8496) * 2 * 2048) {
-
-    PercentOutput += 0.005; 
-  }
-
-  if (PercentOutput > .10) {
-
-    PercentOutput = .10; 
-  }
-
-  if (PercentOutput < -0.10) {
-
-    PercentOutput = -0.10; 
-  }
+PercentOutput = 0.07; 
+}else {
+  PercentOutput = 0; 
+}
   
 
   

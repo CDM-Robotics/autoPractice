@@ -28,12 +28,15 @@ public class ShootBallsAtTheOtherSubteams {
      * The input from the joystick button will read true when the button is pressed and for as long as it is held down
      */
     public static void shootMethod(boolean button_isPressed) {
-        
-
-
-
-
+        if (button_isPressed == true) {
+            mSerializer_Master.set(ControlMode.PercentOutput, 1);
+            mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 1);
+        } else {
+            mSerializer_Master.set(ControlMode.PercentOutput, 0);
+            mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 0);
+        }
     }
+
 
     /**
      * Used to spin up the shooter and prepare to fire balls. Method should toggle between on and off modes. 
@@ -43,10 +46,18 @@ public class ShootBallsAtTheOtherSubteams {
      */
     static int ButtonButton = 0;
     public static void spinUpMethod(boolean button_wasPressed) {
-        
-
-
-
+        if (button_wasPressed == true) {
+            ButtonButton = ButtonButton + 1;
+            if (ButtonButton == 1) {
+            shooterRightMaster.set(ControlMode.PercentOutput, 0.55);
+            }
+            if (ButtonButton == 2) {
+            shooterRightMaster.set(ControlMode.PercentOutput, 0);
+            ButtonButton = 0;
+            }
+        } /*else {
+            shooterRightMaster.set(ControlMode.PercentOutput, 0);
+        }*/
 
     }
 
@@ -56,11 +67,15 @@ public class ShootBallsAtTheOtherSubteams {
      * @param yaw
      */
     public static void aimShooter(double yaw) {
-        
-
-
-
-        
+        if ((yaw < 0.05) && (yaw > -0.05)) {
+            shooterRotate.set(ControlMode.PercentOutput, 0);
+        }
+        if (yaw >= 0.05) {
+            shooterRotate.set(ControlMode.PercentOutput, 0.5);
+        }
+        if (yaw <= 0.05) {
+            shooterRotate.set(ControlMode.PercentOutput, -0.5);
+        }
     }
 
     public static void setup() {
